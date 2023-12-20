@@ -1,0 +1,30 @@
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+img0 = cv2.imread('dataset\\platmobil.jpg')
+
+#mengubah ke dalam skala keabuan
+gray = cv2.cvtColor(img0, cv2.COLOR_BGR2GRAY)
+
+#menghilangkan noise
+img = cv2.GaussianBlur(gray,(3,3),0)
+
+#melakukan pemrosesan dengan kernel yang tepat
+laplacian = cv2.Laplacian(img, cv2.CV_64F)
+sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5) # x
+sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5) # y
+
+plt.subplot(2,2,1),plt.imshow(img,cmap='gray')
+plt.title('Citra Asli'), plt.xticks([]), plt.yticks([])
+
+plt.subplot(2,2,2), plt.imshow(laplacian,cmap='gray')
+plt.title('Laplacian'), plt.xticks([]), plt.yticks([])
+
+plt.subplot(2,2,3), plt.imshow(sobelx,cmap='gray')
+plt.title('Sobel X'), plt.xticks([]), plt.yticks([])
+
+plt.subplot(2,2,4), plt.imshow(sobely,cmap='gray')
+plt.title('Sobel y'), plt.xticks([]), plt.yticks([])
+
+plt.show()
